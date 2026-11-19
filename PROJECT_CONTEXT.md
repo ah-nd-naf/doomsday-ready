@@ -6,8 +6,8 @@ Internship assessment for Blinto (Full Stack Developer). A small full-stack app:
 ## Stack (final, do not change)
 - Backend: Node.js + Express + TypeScript, PostgreSQL, Prisma ORM (use latest stable; follow official docs), Zod for input validation, Vitest for tests
 - Frontend: React + Vite + TypeScript (+ Tailwind CSS)
-- Docker Compose (bonus): postgres + backend + frontend, one command start
-- Layout: monorepo -> /backend, /frontend, docker-compose.yml, README.md, PROJECT_CONTEXT.md, AI_USAGE.md
+- Database: Neon cloud PostgreSQL (connection string in /backend/.env as DATABASE_URL). NO Docker anywhere in this project.
+- Layout: monorepo -> /backend, /frontend, README.md, PROJECT_CONTEXT.md, AI_USAGE.md
 
 ## HARD RULES from the assessment
 1. Work must be the author's own. AI use must be disclosed in README.
