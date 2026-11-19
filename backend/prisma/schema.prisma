@@ -9,3 +9,19 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Movie {
+  id            Int      @id @default(autoincrement())
+  title         String   @unique
+  releaseYear   Int
+  runtime       Int
+  watched       Boolean  @default(false)
+  prerequisites Movie[]  @relation("Prereqs")
+  requiredBy    Movie[]  @relation("Prereqs")
+}
+
+model Cinema {
+  id          Int    @id @default(autoincrement())
+  name        String @unique
+  bundleSizes Int[]
+}
