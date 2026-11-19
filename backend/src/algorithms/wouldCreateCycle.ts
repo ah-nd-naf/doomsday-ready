@@ -11,6 +11,31 @@ export function wouldCreateCycle(
   newPrereqIds: number[],
   prereqMap: Map<number, number[]>
 ): boolean {
-  // TODO(author): Implement cycle detection logic (DFS/reachability check).
-  throw new Error("Not implemented: author writes this");
+  if (newPrereqIds.includes(movieId)) {
+    return true;
+  }
+
+  const visited = new Set<number>();
+  const stack: number[] = [...newPrereqIds];
+
+  while (stack.length > 0) {
+    const current = stack.pop()!;
+
+    if (current === movieId) {
+      return true;
+    }
+
+    if (visited.has(current)) {
+      continue;
+    }
+
+    visited.add(current);
+
+    const prereqs = prereqMap.get(current) ?? [];
+    for (const prereqId of prereqs) {
+      stack.push(prereqId);
+    }
+  }
+
+  return false;
 }
