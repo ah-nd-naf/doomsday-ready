@@ -40,6 +40,24 @@ export class MovieController {
       next(err);
     }
   }
+
+  async getRewatchOrder(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const id = Number(req.params.id);
+      if (!Number.isInteger(id) || id <= 0) {
+        throw AppError.validation("Invalid movie id: must be a positive integer");
+      }
+
+      const rewatchOrder = await movieService.getRewatchOrder(id);
+      res.json(rewatchOrder);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 export const movieController = new MovieController();
