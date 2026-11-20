@@ -9,6 +9,28 @@ export function getRewatchOrder(
   targetId: number,
   prereqMap: Map<number, number[]>
 ): number[] {
-  // TODO(author): Implement rewatch order topological sort logic.
-  throw new Error("Not implemented: author writes this");
+  const visited = new Set<number>();
+  const result: number[] = [];
+
+  function visit(id: number): void {
+    if (visited.has(id)) {
+      return;
+    }
+
+    visited.add(id);
+
+    const prereqs = prereqMap.get(id) ?? [];
+    for (const prereqId of prereqs) {
+      visit(prereqId);
+    }
+
+    result.push(id);
+  }
+
+  const targetPrereqs = prereqMap.get(targetId) ?? [];
+  for (const prereqId of targetPrereqs) {
+    visit(prereqId);
+  }
+
+  return result;
 }
