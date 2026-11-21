@@ -6,10 +6,12 @@ I used AI tools openly in this project. Here is exactly how.
 - Helped me understand the assessment and choose the stack (Node, Express, TypeScript, PostgreSQL, Prisma).
 - Explained the ideas behind the three algorithms in plain language and broke them into small steps: DFS for cycle detection, DFS post-order for the rewatch order, and bottom-up dynamic programming for the booking quote (and why greedy fails for sizes 1, 3, 4 with group size 6).
 - Reviewed the code I wrote, pointed out edge cases.
+- Gave me a step-by-step plain-language outline of each algorithm; I wrote the code from those outlines.
+- Drafted PROJECT_CONTEXT.md and the prompts I gave to the coding agent.
 
 **What I wrote myself:** the logic of Feature 1 and Feature 2, i.e. the three pure functions in `backend/src/algorithms/` (`wouldCreateCycle`, `getRewatchOrder`, `findMinBundles`). No library is used for them.
 
-**Antigravity (AI coding agent), used for the rest, from prompts I reviewed step by step:**
+**Antigravity (AI coding agent), used for the rest, from prompts drafted with Claude's help and checked by me:**
 - Project scaffolding, Prisma schema, migration and seed data
 - Express routes, controllers, services, Zod validation and error handling
 - The Vitest/Supertest tests, including the unit tests for my three algorithms (the agent was told not to modify my algorithm files)
