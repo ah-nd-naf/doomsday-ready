@@ -37,10 +37,23 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col selection:bg-emerald-500 selection:text-zinc-950 relative overflow-x-hidden">
-      {/* Background radial atmosphere */}
+      {/* Fixed App-wide Cinematic Background with dark overlay & graceful fallback */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute top-[-15%] left-[20%] w-[600px] h-[600px] rounded-full bg-emerald-500/5 blur-[120px] animate-pulse-slow" />
-        <div className="absolute bottom-[-10%] right-[10%] w-[500px] h-[500px] rounded-full bg-teal-500/5 blur-[120px]" />
+        <img
+          src="/posters/doomsday-bg.jpg"
+          alt=""
+          aria-hidden="true"
+          className="w-full h-full object-cover object-center fixed inset-0 opacity-30 filter brightness-90 contrast-110"
+          onError={(e) => {
+            (e.currentTarget as HTMLElement).style.display = "none";
+          }}
+        />
+        {/* Cinematic dark overlay: subtle at top, deeper at bottom */}
+        <div className="fixed inset-0 bg-gradient-to-b from-zinc-950/75 via-zinc-950/85 to-zinc-950/95" />
+        {/* Subtle Marvel crimson, gold & emerald radial lighting */}
+        <div className="absolute top-[-10%] left-[10%] w-[600px] h-[600px] rounded-full bg-red-600/10 blur-[140px] pointer-events-none" />
+        <div className="absolute top-[25%] right-[5%] w-[500px] h-[500px] rounded-full bg-emerald-500/8 blur-[130px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] left-[25%] w-[500px] h-[500px] rounded-full bg-amber-500/8 blur-[140px] pointer-events-none" />
       </div>
 
       {/* Hero Header with Tabs */}
@@ -72,16 +85,18 @@ export const App: React.FC = () => {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-800/80 bg-zinc-950/90 py-6 text-center text-xs text-zinc-500 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
-            <span className="font-semibold text-zinc-400">Doomsday Ready</span>
+      <footer className="border-t border-zinc-800/80 bg-zinc-950/95 py-6 text-center text-xs text-zinc-500 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <span className="bg-[#ED1D24] text-white px-1.5 py-0.5 rounded-xs font-black text-[9px] tracking-widest uppercase shadow-[0_0_8px_rgba(237,29,36,0.4)]">
+              MARVEL
+            </span>
+            <span className="font-bold text-zinc-300">DOOMSDAY READY</span>
             <span>—</span>
-            <span>Internship Assessment</span>
+            <span className="text-zinc-400">MCU Rewatch & Ticket Planner</span>
           </div>
           <p className="text-zinc-500 text-[11px]">
-            Pure algorithms for cycle detection, topological rewatch sorting & DP minimum bundle booking.
+            Movie artwork belongs to Marvel Studios / Disney. Used for demonstration only.
           </p>
         </div>
       </footer>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import type { Movie, CreateMoviePayload } from "../types";
 import { createMovie, updateMovie, ApiError } from "../api";
+import { MoviePoster } from "./MoviePoster";
 import { Modal } from "./Modal";
 import {
   PlusIcon,
@@ -20,6 +21,156 @@ interface MoviesViewProps {
   error: string | null;
   onRefresh: () => void;
 }
+
+/**
+ * Individual Movie Card with prominent theatrical poster, hover zoom, and crisp metadata
+ */
+const MovieCardItem: React.FC<{
+  movie: Movie;
+  updatingWatchedId: number | null;
+  onToggleWatched: (movie: Movie) => void;
+  onOpenEditPrereqs: (movie: Movie) => void;
+  formatRuntime: (mins: number) => string;
+}> = ({
+  movie,
+  updatingWatchedId,
+  onToggleWatched,
+  onOpenEditPrereqs,
+  formatRuntime,
+}) => {
+  return (
+    <div
+      className={`group relative rounded-2xl border transition-all duration-300 p-4 sm:p-5 flex flex-col sm:flex-row gap-4 sm:gap-5 overflow-hidden shadow-xl bg-zinc-900/90 hover:bg-zinc-900 backdrop-blur-md ${
+        movie.watched
+          ? "border-emerald-500/40 hover:border-emerald-500/70 hover:shadow-[0_0_30px_rgba(16,185,129,0.2)]"
+          : "border-zinc-800 hover:border-red-500/50 hover:shadow-[0_0_30px_rgba(237,29,36,0.2)]"
+      }`}
+    >
+      {/* Subtle ambient hover glow */}
+      <div
+        className={`absolute -left-10 -top-10 w-44 h-44 rounded-full blur-3xl transition-colors pointer-events-none ${
+          movie.watched
+            ? "bg-emerald-500/5 group-hover:bg-emerald-500/15"
+            : "bg-red-600/5 group-hover:bg-red-600/15"
+        }`}
+      />
+
+      {/* Left: Theatrical Poster Showcase (Crisp, High Visibility) */}
+      <div className="relative w-full sm:w-32 md:w-36 h-48 sm:h-auto sm:aspect-[2/3] flex-shrink-0 rounded-xl overflow-hidden shadow-lg border border-zinc-700/60 bg-zinc-950">
+        <MoviePoster
+          title={movie.title}
+          alt={`Poster for ${movie.title}`}
+          loading="lazy"
+          className="w-full h-full"
+          imgClassName="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+        />
+
+        {/* Watched banner badge on poster */}
+        {movie.watched && (
+          <div className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-emerald-500 text-zinc-950 text-[10px] font-black uppercase tracking-wider shadow-md flex items-center gap-1 backdrop-blur-sm">
+            <CheckCircleIcon className="w-3 h-3" />
+            <span>Watched</span>
+          </div>
+        )}
+      </div>
+
+      {/* Right: Info, Prerequisites & Actions */}
+      <div className="relative z-10 flex-1 flex flex-col justify-between min-w-0">
+        <div>
+          {/* Header & Watched Toggle */}
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0 flex-1">
+              <h3 className="font-extrabold text-zinc-100 text-base sm:text-lg leading-snug group-hover:text-amber-300 transition-colors drop-shadow-sm truncate">
+                {movie.title}
+              </h3>
+              <div className="flex items-center gap-2 mt-2 text-xs text-zinc-400 font-medium flex-wrap">
+                <span className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-zinc-950/80 border border-zinc-800 text-zinc-300 font-mono text-[11px]">
+                  <CalendarIcon className="w-3 h-3 text-amber-400" />
+                  {movie.releaseYear}
+                </span>
+                <span className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-zinc-950/80 border border-zinc-800 text-zinc-300 font-mono text-[11px]">
+                  <ClockIcon className="w-3 h-3 text-amber-400" />
+                  {formatRuntime(movie.runtime)}
+                </span>
+              </div>
+            </div>
+
+            {/* Watched Toggle Checkbox Button */}
+            <button
+              onClick={() => onToggleWatched(movie)}
+              disabled={updatingWatchedId === movie.id}
+              title={movie.watched ? "Mark as unwatched" : "Mark as watched"}
+              className={`flex-shrink-0 p-2 rounded-xl transition-all cursor-pointer ${
+                movie.watched
+                  ? "text-emerald-400 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 shadow-[0_0_15px_rgba(16,185,129,0.3)]"
+                  : "text-zinc-400 hover:text-red-400 hover:bg-red-500/10 border border-zinc-700/80 hover:border-red-500/40 bg-zinc-950"
+              }`}
+            >
+              {movie.watched ? (
+                <CheckCircleIcon className="w-5 h-5 fill-emerald-500/20" />
+              ) : (
+                <CircleIcon className="w-5 h-5" />
+              )}
+            </button>
+          </div>
+
+          {/* Prerequisites Chips */}
+          <div className="mt-4 pt-3 border-t border-zinc-800/80">
+            <div className="flex items-center justify-between text-[11px] font-semibold text-zinc-400 mb-2">
+              <span className="uppercase tracking-wider">
+                Prerequisites ({movie.prerequisites.length})
+              </span>
+              <button
+                onClick={() => onOpenEditPrereqs(movie)}
+                className="inline-flex items-center gap-1 text-red-400 hover:text-red-300 transition-colors cursor-pointer text-xs font-bold"
+              >
+                <EditIcon className="w-3 h-3" />
+                <span>Edit</span>
+              </button>
+            </div>
+
+            <div className="flex flex-wrap gap-1.5 min-h-[28px]">
+              {movie.prerequisites.length === 0 ? (
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-300 border border-amber-500/30 text-[11px] font-medium">
+                  <span className="text-amber-400 font-bold">★</span> MCU Phase Origin (Direct Entry)
+                </span>
+              ) : (
+                movie.prerequisites.map((p) => (
+                  <span
+                    key={p.id}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-red-950/30 hover:bg-red-900/40 text-red-200 border border-red-800/40 hover:border-red-600/60 text-[11px] font-medium shadow-xs transition-colors"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
+                    {p.title}
+                  </span>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom status badge */}
+        <div className="mt-4 pt-3 border-t border-zinc-800/80 flex items-center justify-between text-xs">
+          <span
+            className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold backdrop-blur-sm ${
+              movie.watched
+                ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
+                : "bg-zinc-950/80 text-zinc-400 border border-zinc-800"
+            }`}
+          >
+            <span
+              className={`w-1.5 h-1.5 rounded-full ${
+                movie.watched ? "bg-emerald-400 animate-pulse" : "bg-zinc-500"
+              }`}
+            />
+            {movie.watched ? "Watched" : "Unwatched"}
+          </span>
+          <span className="text-zinc-500 font-mono text-[11px]">#{movie.id}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export const MoviesView: React.FC<MoviesViewProps> = ({
   movies,
@@ -168,7 +319,7 @@ export const MoviesView: React.FC<MoviesViewProps> = ({
   return (
     <div className="space-y-6">
       {/* Top Action Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-zinc-900/60 border border-zinc-800/80 p-4 rounded-2xl backdrop-blur-sm">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-zinc-900/80 border border-zinc-800 p-4 rounded-2xl backdrop-blur-md shadow-lg">
         {/* Search & Filter */}
         <div className="flex flex-wrap items-center gap-3 flex-1">
           <div className="relative flex-1 min-w-[200px] max-w-md">
@@ -178,16 +329,16 @@ export const MoviesView: React.FC<MoviesViewProps> = ({
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search MCU movies..."
-              className="w-full bg-zinc-950/80 border border-zinc-800 rounded-xl pl-10 pr-4 py-2 text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/50 transition-colors"
+              className="w-full bg-zinc-950/90 border border-zinc-800 rounded-xl pl-10 pr-4 py-2 text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-red-500/60 focus:ring-1 focus:ring-red-500/50 transition-colors"
             />
           </div>
 
           <div className="flex items-center gap-1 bg-zinc-950 p-1 rounded-xl border border-zinc-800 text-xs">
             <button
               onClick={() => setWatchedFilter("all")}
-              className={`px-3 py-1.5 rounded-lg font-medium cursor-pointer transition-colors ${
+              className={`px-3 py-1.5 rounded-lg font-bold cursor-pointer transition-all ${
                 watchedFilter === "all"
-                  ? "bg-zinc-800 text-zinc-100"
+                  ? "bg-red-600 text-white shadow-[0_0_12px_rgba(237,29,36,0.4)]"
                   : "text-zinc-400 hover:text-zinc-200"
               }`}
             >
@@ -195,20 +346,20 @@ export const MoviesView: React.FC<MoviesViewProps> = ({
             </button>
             <button
               onClick={() => setWatchedFilter("watched")}
-              className={`px-3 py-1.5 rounded-lg font-medium cursor-pointer transition-colors ${
+              className={`px-3 py-1.5 rounded-lg font-bold cursor-pointer transition-all ${
                 watchedFilter === "watched"
-                  ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
-                  : "text-zinc-400 hover:text-zinc-200"
+                  ? "bg-emerald-500 text-zinc-950 shadow-[0_0_12px_rgba(16,185,129,0.4)]"
+                  : "text-zinc-400 hover:text-emerald-400"
               }`}
             >
               Watched ({movies.filter((m) => m.watched).length})
             </button>
             <button
               onClick={() => setWatchedFilter("unwatched")}
-              className={`px-3 py-1.5 rounded-lg font-medium cursor-pointer transition-colors ${
+              className={`px-3 py-1.5 rounded-lg font-bold cursor-pointer transition-all ${
                 watchedFilter === "unwatched"
-                  ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
-                  : "text-zinc-400 hover:text-zinc-200"
+                  ? "bg-amber-500 text-zinc-950 shadow-[0_0_12px_rgba(245,158,11,0.4)]"
+                  : "text-zinc-400 hover:text-amber-400"
               }`}
             >
               Unwatched ({movies.filter((m) => !m.watched).length})
@@ -223,13 +374,13 @@ export const MoviesView: React.FC<MoviesViewProps> = ({
             title="Refresh movies"
             className="p-2.5 rounded-xl border border-zinc-800 bg-zinc-950/60 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/60 transition-colors cursor-pointer"
           >
-            <RefreshIcon className={`w-4 h-4 ${loading ? "animate-spin text-emerald-400" : ""}`} />
+            <RefreshIcon className={`w-4 h-4 ${loading ? "animate-spin text-red-500" : ""}`} />
           </button>
           <button
             onClick={handleOpenAdd}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold text-sm transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:shadow-[0_0_20px_rgba(16,185,129,0.5)] cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#ED1D24] hover:bg-red-500 text-white font-black text-sm tracking-wide transition-all shadow-[0_0_20px_rgba(237,29,36,0.45)] hover:shadow-[0_0_25px_rgba(237,29,36,0.65)] cursor-pointer"
           >
-            <PlusIcon className="w-4 h-4 stroke-[2.5]" />
+            <PlusIcon className="w-4 h-4 stroke-[3]" />
             <span>Add Movie</span>
           </button>
         </div>
@@ -245,11 +396,11 @@ export const MoviesView: React.FC<MoviesViewProps> = ({
 
       {/* Loading Skeletons */}
       {loading && movies.length === 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[1, 2, 3, 4, 5, 6].map((n) => (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          {[1, 2, 3, 4].map((n) => (
             <div
               key={n}
-              className="h-44 rounded-2xl bg-zinc-900/40 border border-zinc-800 animate-pulse p-5 space-y-3"
+              className="h-52 rounded-2xl bg-zinc-900/60 border border-zinc-800 animate-pulse p-5 space-y-3"
             >
               <div className="h-5 bg-zinc-800 rounded-md w-3/4" />
               <div className="h-4 bg-zinc-800/60 rounded-md w-1/2" />
@@ -259,7 +410,7 @@ export const MoviesView: React.FC<MoviesViewProps> = ({
         </div>
       ) : filteredMovies.length === 0 ? (
         /* Empty State */
-        <div className="text-center py-16 px-4 bg-zinc-900/30 border border-zinc-800/80 rounded-2xl">
+        <div className="text-center py-16 px-4 bg-zinc-900/40 border border-zinc-800 rounded-2xl backdrop-blur-sm">
           <div className="w-12 h-12 mx-auto rounded-full bg-zinc-800/80 flex items-center justify-center text-zinc-400 mb-3">
             <SearchIcon className="w-6 h-6" />
           </div>
@@ -271,108 +422,17 @@ export const MoviesView: React.FC<MoviesViewProps> = ({
           </p>
         </div>
       ) : (
-        /* Movie Cards Grid */
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        /* Movie Cards Grid with Prominent Theatrical Posters */
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           {filteredMovies.map((movie) => (
-            <div
+            <MovieCardItem
               key={movie.id}
-              className={`group relative rounded-2xl border transition-all duration-200 p-5 flex flex-col justify-between ${
-                movie.watched
-                  ? "bg-zinc-900/40 border-zinc-800/80 hover:border-emerald-500/40"
-                  : "bg-zinc-900/80 border-zinc-800 hover:border-zinc-700 shadow-lg hover:shadow-emerald-500/5"
-              }`}
-            >
-              <div>
-                {/* Header & Watched Toggle */}
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex-1">
-                    <h3 className="font-bold text-zinc-100 text-base leading-snug group-hover:text-emerald-400 transition-colors">
-                      {movie.title}
-                    </h3>
-                    <div className="flex items-center gap-3 mt-1.5 text-xs text-zinc-400">
-                      <span className="flex items-center gap-1">
-                        <CalendarIcon className="w-3.5 h-3.5 text-zinc-500" />
-                        {movie.releaseYear}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <ClockIcon className="w-3.5 h-3.5 text-zinc-500" />
-                        {formatRuntime(movie.runtime)}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Watched Checkbox */}
-                  <button
-                    onClick={() => handleToggleWatched(movie)}
-                    disabled={updatingWatchedId === movie.id}
-                    title={movie.watched ? "Mark as unwatched" : "Mark as watched"}
-                    className={`flex-shrink-0 p-1.5 rounded-lg transition-all cursor-pointer ${
-                      movie.watched
-                        ? "text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20"
-                        : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800"
-                    }`}
-                  >
-                    {movie.watched ? (
-                      <CheckCircleIcon className="w-5 h-5 fill-emerald-500/20" />
-                    ) : (
-                      <CircleIcon className="w-5 h-5" />
-                    )}
-                  </button>
-                </div>
-
-                {/* Prerequisites Chips */}
-                <div className="mt-4 pt-3 border-t border-zinc-800/60">
-                  <div className="flex items-center justify-between text-[11px] font-medium text-zinc-400 mb-2">
-                    <span className="uppercase tracking-wider">
-                      Prerequisites ({movie.prerequisites.length})
-                    </span>
-                    <button
-                      onClick={() => handleOpenEditPrereqs(movie)}
-                      className="inline-flex items-center gap-1 text-emerald-400 hover:text-emerald-300 transition-colors cursor-pointer"
-                    >
-                      <EditIcon className="w-3 h-3" />
-                      <span>Edit</span>
-                    </button>
-                  </div>
-
-                  <div className="flex flex-wrap gap-1.5 min-h-[28px]">
-                    {movie.prerequisites.length === 0 ? (
-                      <span className="text-xs text-zinc-500 italic">
-                        None (Direct entry point)
-                      </span>
-                    ) : (
-                      movie.prerequisites.map((p) => (
-                        <span
-                          key={p.id}
-                          className="inline-flex items-center text-[11px] px-2 py-0.5 rounded-md bg-zinc-800/90 text-zinc-300 border border-zinc-700/60 font-mono"
-                        >
-                          {p.title}
-                        </span>
-                      ))
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom status badge */}
-              <div className="mt-4 pt-3 border-t border-zinc-800/40 flex items-center justify-between text-xs">
-                <span
-                  className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium ${
-                    movie.watched
-                      ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                      : "bg-zinc-800/60 text-zinc-400 border border-zinc-700/40"
-                  }`}
-                >
-                  <span
-                    className={`w-1.5 h-1.5 rounded-full ${
-                      movie.watched ? "bg-emerald-400" : "bg-zinc-500"
-                    }`}
-                  />
-                  {movie.watched ? "Watched" : "Unwatched"}
-                </span>
-                <span className="text-zinc-600 font-mono text-[10px]">ID: #{movie.id}</span>
-              </div>
-            </div>
+              movie={movie}
+              updatingWatchedId={updatingWatchedId}
+              onToggleWatched={handleToggleWatched}
+              onOpenEditPrereqs={handleOpenEditPrereqs}
+              formatRuntime={formatRuntime}
+            />
           ))}
         </div>
       )}

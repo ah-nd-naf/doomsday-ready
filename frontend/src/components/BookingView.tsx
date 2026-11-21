@@ -77,25 +77,46 @@ export const BookingView: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Hero Card */}
-      <div className="bg-gradient-to-r from-zinc-900 via-zinc-900/90 to-zinc-950 border border-zinc-800 p-6 rounded-2xl shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+      {/* Hero Card with Cinematic Backdrop */}
+      <div className="relative overflow-hidden bg-gradient-to-r from-zinc-900 via-zinc-900/90 to-zinc-950 border border-zinc-800 p-6 sm:p-8 rounded-2xl shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
+        {/* Cinematic Backdrop Image */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <img
+            src="/posters/doomsday-bg.jpg"
+            alt="Avengers: Doomsday watch party backdrop"
+            className="w-full h-full object-cover object-center scale-105 opacity-30"
+            onError={(e) => {
+              (e.currentTarget as HTMLElement).style.display = "none";
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/95 via-zinc-950/85 to-zinc-950/90" />
+        </div>
+
+        <div className="relative z-10 flex items-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-red-600/15 border border-red-600/30 flex items-center justify-center text-red-400 shadow-[0_0_20px_rgba(237,29,36,0.3)] flex-shrink-0">
             <TicketIcon className="w-6 h-6" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-zinc-100">
+            <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+              <span className="bg-[#ED1D24] text-white px-2 py-0.5 rounded-xs font-black text-[9px] tracking-widest uppercase shadow-[0_0_12px_rgba(237,29,36,0.5)]">
+                MARVEL PREMIERE
+              </span>
+              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                Opening Night Ticket Optimization
+              </span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-black text-zinc-100 tracking-tight">
               Opening Night Watch Party Booking
             </h2>
-            <p className="text-xs text-zinc-400 mt-0.5">
-              Exact-sum ticket bundle optimization with bottom-up dynamic programming
+            <p className="text-xs text-zinc-400 mt-1 max-w-xl">
+              Exact-sum ticket bundle optimization with bottom-up dynamic programming. Find the fewest bundles for your crew.
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 text-xs text-zinc-400 bg-zinc-950 px-3 py-1.5 rounded-xl border border-zinc-800">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span>Optimal Minimum Bundles</span>
+        <div className="relative z-10 flex items-center gap-2 text-xs text-zinc-300 bg-zinc-950/80 backdrop-blur-sm px-4 py-2 rounded-xl border border-zinc-800 shadow-md">
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
+          <span className="font-medium">Optimal Minimum Bundles</span>
         </div>
       </div>
 
@@ -173,7 +194,7 @@ export const BookingView: React.FC = () => {
                 <button
                   type="submit"
                   disabled={quoting || !selectedCinemaId}
-                  className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-sm transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:shadow-[0_0_20px_rgba(16,185,129,0.5)] disabled:opacity-50 cursor-pointer whitespace-nowrap"
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-black text-sm tracking-wide transition-all shadow-[0_0_20px_rgba(237,29,36,0.4)] hover:shadow-[0_0_25px_rgba(237,29,36,0.6)] disabled:opacity-50 cursor-pointer whitespace-nowrap"
                 >
                   {quoting ? "Calculating..." : "Get Bundle Quote"}
                 </button>
