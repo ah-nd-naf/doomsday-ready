@@ -7,7 +7,7 @@ MCU Rewatch Planner & Ticket Booking Engine — built for the Blinto Full Stack 
 - **Cycle Prevention**: DFS cycle detection rejects self-dependencies and indirect circular prerequisite chains with HTTP 409 `CIRCULAR_DEPENDENCY`.
 - **Topological Rewatch Order**: Generates a valid rewatch timeline using post-order DFS, tracking watched progress and remaining runtime.
 - **Dynamic Ticket Bundle Optimization**: Exact-sum ticket allocation using bottom-up dynamic programming to find the fewest bundles for watch party groups.
-- **Cinematic Marvel Studios UI**: Responsive React frontend featuring theatrical poster cards, interactive watched toggles, and dedicated views for movies, rewatch timelines, and cinema booking.
+- **Cinematic dark-themed UI**: Responsive React frontend featuring theatrical poster cards, interactive watched toggles, and dedicated views for movies, rewatch timelines, and cinema booking.
 
 ---
 
