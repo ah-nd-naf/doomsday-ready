@@ -40,7 +40,7 @@ const MovieCardItem: React.FC<{
 }) => {
   return (
     <div
-      className={`group relative rounded-2xl border transition-all duration-300 p-4 sm:p-5 flex flex-col sm:flex-row gap-4 sm:gap-5 overflow-hidden shadow-xl bg-zinc-900/90 hover:bg-zinc-900 backdrop-blur-md ${
+      className={`group relative rounded-2xl border transition-all duration-300 p-3.5 sm:p-5 flex flex-row gap-3.5 sm:gap-5 overflow-hidden shadow-xl bg-zinc-900/90 hover:bg-zinc-900 backdrop-blur-md ${
         movie.watched
           ? "border-emerald-500/40 hover:border-emerald-500/70 hover:shadow-[0_0_30px_rgba(16,185,129,0.2)]"
           : "border-zinc-800 hover:border-red-500/50 hover:shadow-[0_0_30px_rgba(237,29,36,0.2)]"
@@ -55,8 +55,8 @@ const MovieCardItem: React.FC<{
         }`}
       />
 
-      {/* Left: Theatrical Poster Showcase (Crisp, High Visibility) */}
-      <div className="relative w-full sm:w-32 md:w-36 h-48 sm:h-auto sm:aspect-[2/3] flex-shrink-0 rounded-xl overflow-hidden shadow-lg border border-zinc-700/60 bg-zinc-950">
+      {/* Left: Theatrical Poster Showcase (Crisp, High Visibility, 2:3 proportion on all devices) */}
+      <div className="relative w-24 sm:w-32 md:w-36 aspect-[2/3] flex-shrink-0 rounded-xl overflow-hidden shadow-lg border border-zinc-700/60 bg-zinc-950">
         <MoviePoster
           title={movie.title}
           alt={`Poster for ${movie.title}`}
@@ -67,9 +67,9 @@ const MovieCardItem: React.FC<{
 
         {/* Watched banner badge on poster */}
         {movie.watched && (
-          <div className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-emerald-500 text-zinc-950 text-[10px] font-black uppercase tracking-wider shadow-md flex items-center gap-1 backdrop-blur-sm">
-            <CheckCircleIcon className="w-3 h-3" />
-            <span>Watched</span>
+          <div className="absolute top-1.5 left-1.5 px-1.5 sm:px-2 py-0.5 rounded-md bg-emerald-500 text-zinc-950 text-[9px] sm:text-[10px] font-black uppercase tracking-wider shadow-md flex items-center gap-0.5 sm:gap-1 backdrop-blur-sm">
+            <CheckCircleIcon className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+            <span className="hidden sm:inline">Watched</span>
           </div>
         )}
       </div>
@@ -78,17 +78,17 @@ const MovieCardItem: React.FC<{
       <div className="relative z-10 flex-1 flex flex-col justify-between min-w-0">
         <div>
           {/* Header & Watched Toggle */}
-          <div className="flex items-start justify-between gap-3">
+          <div className="flex items-start justify-between gap-2 sm:gap-3">
             <div className="min-w-0 flex-1">
-              <h3 className="font-extrabold text-zinc-100 text-base sm:text-lg leading-snug group-hover:text-amber-300 transition-colors drop-shadow-sm truncate">
+              <h3 className="font-extrabold text-zinc-100 text-sm sm:text-lg leading-snug group-hover:text-amber-300 transition-colors drop-shadow-sm line-clamp-2">
                 {movie.title}
               </h3>
-              <div className="flex items-center gap-2 mt-2 text-xs text-zinc-400 font-medium flex-wrap">
-                <span className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-zinc-950/80 border border-zinc-800 text-zinc-300 font-mono text-[11px]">
+              <div className="flex items-center gap-1.5 sm:gap-2 mt-1.5 sm:mt-2 text-xs text-zinc-400 font-medium flex-wrap">
+                <span className="flex items-center gap-1 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-zinc-950/80 border border-zinc-800 text-zinc-300 font-mono text-[10px] sm:text-[11px]">
                   <CalendarIcon className="w-3 h-3 text-amber-400" />
                   {movie.releaseYear}
                 </span>
-                <span className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-zinc-950/80 border border-zinc-800 text-zinc-300 font-mono text-[11px]">
+                <span className="flex items-center gap-1 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-zinc-950/80 border border-zinc-800 text-zinc-300 font-mono text-[10px] sm:text-[11px]">
                   <ClockIcon className="w-3 h-3 text-amber-400" />
                   {formatRuntime(movie.runtime)}
                 </span>
@@ -100,48 +100,48 @@ const MovieCardItem: React.FC<{
               onClick={() => onToggleWatched(movie)}
               disabled={updatingWatchedId === movie.id}
               title={movie.watched ? "Mark as unwatched" : "Mark as watched"}
-              className={`flex-shrink-0 p-2 rounded-xl transition-all cursor-pointer ${
+              className={`flex-shrink-0 p-1.5 sm:p-2 rounded-xl transition-all cursor-pointer ${
                 movie.watched
                   ? "text-emerald-400 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 shadow-[0_0_15px_rgba(16,185,129,0.3)]"
                   : "text-zinc-400 hover:text-red-400 hover:bg-red-500/10 border border-zinc-700/80 hover:border-red-500/40 bg-zinc-950"
               }`}
             >
               {movie.watched ? (
-                <CheckCircleIcon className="w-5 h-5 fill-emerald-500/20" />
+                <CheckCircleIcon className="w-4 h-4 sm:w-5 sm:h-5 fill-emerald-500/20" />
               ) : (
-                <CircleIcon className="w-5 h-5" />
+                <CircleIcon className="w-4 h-4 sm:w-5 sm:h-5" />
               )}
             </button>
           </div>
 
           {/* Prerequisites Chips */}
-          <div className="mt-4 pt-3 border-t border-zinc-800/80">
-            <div className="flex items-center justify-between text-[11px] font-semibold text-zinc-400 mb-2">
+          <div className="mt-3 sm:mt-4 pt-2 sm:pt-3 border-t border-zinc-800/80">
+            <div className="flex items-center justify-between text-[10px] sm:text-[11px] font-semibold text-zinc-400 mb-1.5 sm:mb-2">
               <span className="uppercase tracking-wider">
                 Prerequisites ({movie.prerequisites.length})
               </span>
               <button
                 onClick={() => onOpenEditPrereqs(movie)}
-                className="inline-flex items-center gap-1 text-red-400 hover:text-red-300 transition-colors cursor-pointer text-xs font-bold"
+                className="inline-flex items-center gap-1 text-red-400 hover:text-red-300 transition-colors cursor-pointer text-[11px] sm:text-xs font-bold"
               >
                 <EditIcon className="w-3 h-3" />
                 <span>Edit</span>
               </button>
             </div>
 
-            <div className="flex flex-wrap gap-1.5 min-h-[28px]">
+            <div className="flex flex-wrap gap-1 sm:gap-1.5 min-h-[24px]">
               {movie.prerequisites.length === 0 ? (
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-300 border border-amber-500/30 text-[11px] font-medium">
-                  <span className="text-amber-400 font-bold">★</span> MCU Phase Origin (Direct Entry)
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-300 border border-amber-500/30 text-[10px] sm:text-[11px] font-medium">
+                  <span className="text-amber-400 font-bold">★</span> MCU Origin
                 </span>
               ) : (
                 movie.prerequisites.map((p) => (
                   <span
                     key={p.id}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-red-950/30 hover:bg-red-900/40 text-red-200 border border-red-800/40 hover:border-red-600/60 text-[11px] font-medium shadow-xs transition-colors"
+                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-red-950/30 hover:bg-red-900/40 text-red-200 border border-red-800/40 hover:border-red-600/60 text-[10px] sm:text-[11px] font-medium shadow-xs transition-colors"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
-                    {p.title}
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0" />
+                    <span className="truncate max-w-[130px] sm:max-w-none">{p.title}</span>
                   </span>
                 ))
               )}
@@ -150,9 +150,9 @@ const MovieCardItem: React.FC<{
         </div>
 
         {/* Bottom status badge */}
-        <div className="mt-4 pt-3 border-t border-zinc-800/80 flex items-center justify-between text-xs">
+        <div className="mt-3 pt-2 border-t border-zinc-800/80 flex items-center justify-between text-xs">
           <span
-            className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold backdrop-blur-sm ${
+            className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-semibold backdrop-blur-sm ${
               movie.watched
                 ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
                 : "bg-zinc-950/80 text-zinc-400 border border-zinc-800"
@@ -165,7 +165,7 @@ const MovieCardItem: React.FC<{
             />
             {movie.watched ? "Watched" : "Unwatched"}
           </span>
-          <span className="text-zinc-500 font-mono text-[11px]">#{movie.id}</span>
+          <span className="text-zinc-500 font-mono text-[10px] sm:text-[11px]">#{movie.id}</span>
         </div>
       </div>
     </div>
@@ -319,24 +319,24 @@ export const MoviesView: React.FC<MoviesViewProps> = ({
   return (
     <div className="space-y-6">
       {/* Top Action Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-zinc-900/80 border border-zinc-800 p-4 rounded-2xl backdrop-blur-md shadow-lg">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 bg-zinc-900/80 border border-zinc-800 p-3.5 sm:p-4 rounded-2xl backdrop-blur-md shadow-lg">
         {/* Search & Filter */}
-        <div className="flex flex-wrap items-center gap-3 flex-1">
-          <div className="relative flex-1 min-w-[200px] max-w-md">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 flex-1 min-w-0">
+          <div className="relative w-full sm:flex-1 sm:max-w-xs md:max-w-sm">
             <SearchIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 w-4 h-4" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search MCU movies..."
-              className="w-full bg-zinc-950/90 border border-zinc-800 rounded-xl pl-10 pr-4 py-2 text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-red-500/60 focus:ring-1 focus:ring-red-500/50 transition-colors"
+              className="w-full bg-zinc-950/90 border border-zinc-800 rounded-xl pl-10 pr-4 py-2 text-xs sm:text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-red-500/60 focus:ring-1 focus:ring-red-500/50 transition-colors"
             />
           </div>
 
-          <div className="flex items-center gap-1 bg-zinc-950 p-1 rounded-xl border border-zinc-800 text-xs">
+          <div className="flex items-center justify-between sm:justify-start gap-1 bg-zinc-950 p-1 rounded-xl border border-zinc-800 text-xs overflow-x-auto w-full sm:w-auto">
             <button
               onClick={() => setWatchedFilter("all")}
-              className={`px-3 py-1.5 rounded-lg font-bold cursor-pointer transition-all ${
+              className={`flex-1 sm:flex-initial px-2.5 sm:px-3 py-1.5 rounded-lg font-bold cursor-pointer transition-all whitespace-nowrap text-center ${
                 watchedFilter === "all"
                   ? "bg-red-600 text-white shadow-[0_0_12px_rgba(237,29,36,0.4)]"
                   : "text-zinc-400 hover:text-zinc-200"
@@ -346,7 +346,7 @@ export const MoviesView: React.FC<MoviesViewProps> = ({
             </button>
             <button
               onClick={() => setWatchedFilter("watched")}
-              className={`px-3 py-1.5 rounded-lg font-bold cursor-pointer transition-all ${
+              className={`flex-1 sm:flex-initial px-2.5 sm:px-3 py-1.5 rounded-lg font-bold cursor-pointer transition-all whitespace-nowrap text-center ${
                 watchedFilter === "watched"
                   ? "bg-emerald-500 text-zinc-950 shadow-[0_0_12px_rgba(16,185,129,0.4)]"
                   : "text-zinc-400 hover:text-emerald-400"
@@ -356,7 +356,7 @@ export const MoviesView: React.FC<MoviesViewProps> = ({
             </button>
             <button
               onClick={() => setWatchedFilter("unwatched")}
-              className={`px-3 py-1.5 rounded-lg font-bold cursor-pointer transition-all ${
+              className={`flex-1 sm:flex-initial px-2.5 sm:px-3 py-1.5 rounded-lg font-bold cursor-pointer transition-all whitespace-nowrap text-center ${
                 watchedFilter === "unwatched"
                   ? "bg-amber-500 text-zinc-950 shadow-[0_0_12px_rgba(245,158,11,0.4)]"
                   : "text-zinc-400 hover:text-amber-400"
@@ -368,17 +368,17 @@ export const MoviesView: React.FC<MoviesViewProps> = ({
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 justify-end w-full sm:w-auto">
           <button
             onClick={onRefresh}
             title="Refresh movies"
-            className="p-2.5 rounded-xl border border-zinc-800 bg-zinc-950/60 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/60 transition-colors cursor-pointer"
+            className="p-2 sm:p-2.5 rounded-xl border border-zinc-800 bg-zinc-950/60 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/60 transition-colors cursor-pointer flex-shrink-0"
           >
             <RefreshIcon className={`w-4 h-4 ${loading ? "animate-spin text-red-500" : ""}`} />
           </button>
           <button
             onClick={handleOpenAdd}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#ED1D24] hover:bg-red-500 text-white font-black text-sm tracking-wide transition-all shadow-[0_0_20px_rgba(237,29,36,0.45)] hover:shadow-[0_0_25px_rgba(237,29,36,0.65)] cursor-pointer"
+            className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl bg-[#ED1D24] hover:bg-red-500 text-white font-black text-xs sm:text-sm tracking-wide transition-all shadow-[0_0_20px_rgba(237,29,36,0.45)] hover:shadow-[0_0_25px_rgba(237,29,36,0.65)] cursor-pointer whitespace-nowrap"
           >
             <PlusIcon className="w-4 h-4 stroke-[3]" />
             <span>Add Movie</span>

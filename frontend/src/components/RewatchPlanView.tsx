@@ -11,7 +11,6 @@ import {
   CalendarIcon,
   AlertCircleIcon,
   RefreshIcon,
-  SparklesIcon,
 } from "./Icons";
 
 interface RewatchPlanViewProps {
@@ -99,33 +98,33 @@ export const RewatchPlanView: React.FC<RewatchPlanViewProps> = ({
   return (
     <div className="space-y-6">
       {/* Target Selector Banner */}
-      <div className="bg-gradient-to-r from-zinc-900 via-zinc-900/90 to-zinc-950 border border-zinc-800 p-5 rounded-2xl shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-gradient-to-r from-zinc-900 via-zinc-900/90 to-zinc-950 border border-zinc-800 p-4 sm:p-5 rounded-2xl shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 sm:gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-red-600/15 border border-red-600/30 flex items-center justify-center text-red-400 shadow-[0_0_15px_rgba(237,29,36,0.2)]">
+          <div className="w-10 h-10 rounded-xl bg-red-600/15 border border-red-600/30 flex items-center justify-center text-red-400 shadow-[0_0_15px_rgba(237,29,36,0.2)] flex-shrink-0">
             <ListOrderedIcon className="w-5 h-5" />
           </div>
-          <div>
-            <h2 className="text-base font-bold text-zinc-100 flex items-center gap-2">
+          <div className="min-w-0">
+            <h2 className="text-sm sm:text-base font-bold text-zinc-100 flex items-center gap-2 flex-wrap">
               <span>The Sacred Timeline Rewatch Order</span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-red-600/20 text-red-300 border border-red-600/30 font-mono uppercase tracking-wider">
+              <span className="text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full bg-red-600/20 text-red-300 border border-red-600/30 font-mono uppercase tracking-wider">
                 Toposort
               </span>
             </h2>
-            <p className="text-xs text-zinc-400">
+            <p className="text-[11px] sm:text-xs text-zinc-400 mt-0.5">
               Chronological & topological storyline dependencies across MCU phases
             </p>
           </div>
         </div>
 
         {/* Target Movie Dropdown */}
-        <div className="flex items-center gap-2">
-          <label className="text-xs text-zinc-400 font-medium whitespace-nowrap">
-            Target Destination:
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          <label className="text-xs text-zinc-400 font-medium whitespace-nowrap hidden sm:inline">
+            Target:
           </label>
           <select
             value={selectedMovieId ?? ""}
             onChange={(e) => setSelectedMovieId(Number(e.target.value))}
-            className="bg-zinc-950 border border-zinc-700/80 rounded-xl px-3.5 py-2 text-sm text-zinc-100 font-semibold focus:outline-none focus:border-red-500 cursor-pointer shadow-inner"
+            className="w-full sm:w-auto flex-1 min-w-0 bg-zinc-950 border border-zinc-700/80 rounded-xl px-3 py-2 text-xs sm:text-sm text-zinc-100 font-semibold focus:outline-none focus:border-red-500 cursor-pointer shadow-inner truncate"
           >
             {movies.map((m) => (
               <option key={m.id} value={m.id}>
@@ -137,7 +136,7 @@ export const RewatchPlanView: React.FC<RewatchPlanViewProps> = ({
             <button
               onClick={() => fetchPlan(selectedMovieId)}
               title="Refresh plan"
-              className="p-2 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer"
+              className="p-2 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer flex-shrink-0"
             >
               <RefreshIcon className={`w-4 h-4 ${loading ? "animate-spin text-red-500" : ""}`} />
             </button>
@@ -172,7 +171,7 @@ export const RewatchPlanView: React.FC<RewatchPlanViewProps> = ({
       {plan && (
         <div className="space-y-6">
           {/* Summary & Progress Card */}
-          <div className="relative overflow-hidden bg-zinc-900/90 border border-zinc-800 rounded-2xl p-6 shadow-xl">
+          <div className="relative overflow-hidden bg-zinc-900/90 border border-zinc-800 rounded-2xl p-4 sm:p-6 shadow-xl">
             {/* Blurred Target Poster Backdrop */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
               <img
@@ -190,55 +189,55 @@ export const RewatchPlanView: React.FC<RewatchPlanViewProps> = ({
             {/* Ambient background glow */}
             <div className="absolute -right-16 -top-16 w-56 h-56 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none" />
 
-            <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5 sm:gap-6">
               <div>
                 <span className="text-xs uppercase font-extrabold tracking-widest text-red-400 font-mono">
                   Sacred Timeline Roadmap for:
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-100 to-amber-300 tracking-wide mt-1 drop-shadow-sm">
+                <h3 className="text-xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-100 to-amber-300 tracking-wide mt-1 drop-shadow-sm">
                   {plan.target.title}
                 </h3>
-                <p className="text-xs text-zinc-400 mt-1">
+                <p className="text-[11px] sm:text-xs text-zinc-400 mt-1">
                   {plan.summary.total === 0
                     ? "This movie has no prerequisites. You can jump straight into the premiere!"
                     : `Must watch all ${plan.summary.total} prerequisites in the timeline order below before ${plan.target.title}.`}
                 </p>
               </div>
 
-              {/* Stats badges */}
-              <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
-                <div className="bg-zinc-950/80 border border-zinc-800/80 rounded-xl px-4 py-2.5 text-center min-w-[90px]">
-                  <div className="text-[11px] uppercase tracking-wider text-zinc-400 font-medium">
+              {/* Stats badges - Flawless 2x2 grid on mobile, 4-col on desktop */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 w-full sm:w-auto">
+                <div className="bg-zinc-950/80 border border-zinc-800/80 rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 text-center">
+                  <div className="text-[10px] sm:text-[11px] uppercase tracking-wider text-zinc-400 font-medium">
                     Total
                   </div>
-                  <div className="text-xl font-black text-zinc-100 font-mono">
+                  <div className="text-lg sm:text-xl font-black text-zinc-100 font-mono">
                     {plan.summary.total}
                   </div>
                 </div>
 
-                <div className="bg-zinc-950/80 border border-emerald-500/30 rounded-xl px-4 py-2.5 text-center min-w-[90px]">
-                  <div className="text-[11px] uppercase tracking-wider text-emerald-400 font-medium">
+                <div className="bg-zinc-950/80 border border-emerald-500/30 rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 text-center">
+                  <div className="text-[10px] sm:text-[11px] uppercase tracking-wider text-emerald-400 font-medium">
                     Watched
                   </div>
-                  <div className="text-xl font-black text-emerald-400 font-mono">
+                  <div className="text-lg sm:text-xl font-black text-emerald-400 font-mono">
                     {plan.summary.watched}
                   </div>
                 </div>
 
-                <div className="bg-zinc-950/80 border border-amber-500/30 rounded-xl px-4 py-2.5 text-center min-w-[90px]">
-                  <div className="text-[11px] uppercase tracking-wider text-amber-400 font-medium">
+                <div className="bg-zinc-950/80 border border-amber-500/30 rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 text-center">
+                  <div className="text-[10px] sm:text-[11px] uppercase tracking-wider text-amber-400 font-medium">
                     Remaining
                   </div>
-                  <div className="text-xl font-black text-amber-400 font-mono">
+                  <div className="text-lg sm:text-xl font-black text-amber-400 font-mono">
                     {plan.summary.unwatched}
                   </div>
                 </div>
 
-                <div className="bg-zinc-950/80 border border-zinc-800/80 rounded-xl px-4 py-2.5 text-center min-w-[110px]">
-                  <div className="text-[11px] uppercase tracking-wider text-zinc-400 font-medium">
+                <div className="bg-zinc-950/80 border border-zinc-800/80 rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 text-center">
+                  <div className="text-[10px] sm:text-[11px] uppercase tracking-wider text-zinc-400 font-medium">
                     Watch Time Left
                   </div>
-                  <div className="text-xl font-black text-zinc-100 font-mono">
+                  <div className="text-lg sm:text-xl font-black text-zinc-100 font-mono">
                     {formatTime(plan.summary.remainingRuntimeMinutes)}
                   </div>
                 </div>
@@ -247,10 +246,10 @@ export const RewatchPlanView: React.FC<RewatchPlanViewProps> = ({
 
             {/* Progress Bar (if total > 0) */}
             {plan.summary.total > 0 && (
-              <div className="relative z-10 mt-6 pt-5 border-t border-zinc-800/80">
+              <div className="relative z-10 mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-zinc-800/80">
                 <div className="flex items-center justify-between text-xs font-medium text-zinc-300 mb-2">
-                  <span className="flex items-center gap-2">
-                    <SparklesIcon className="w-4 h-4 text-amber-400" />
+                  <span className="flex items-center gap-1.5 sm:gap-2">
+                    <CheckCircleIcon className="w-3.5 h-3.5 text-amber-400" />
                     <span>
                       {plan.summary.watched} of {plan.summary.total} watched
                     </span>

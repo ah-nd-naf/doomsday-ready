@@ -274,3 +274,44 @@ export function RefreshIcon({ className = "w-4 h-4", ...props }: IconProps) {
     </svg>
   );
 }
+
+/**
+ * Original bespoke brand mark for DOOMSDAY READY:
+ * A cinematic Multiverse Chronometer & Film Reel nexus emblem
+ */
+export function DoomsdayLogo({ className = "w-6 h-6", ...props }: IconProps) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      {/* Outer Cinema Timeline Rim */}
+      <circle cx="12" cy="12" r="9.75" />
+      {/* 4 Cardinal Timeline Ticks */}
+      <line x1="12" y1="2.25" x2="12" y2="4.5" />
+      <line x1="12" y1="19.5" x2="12" y2="21.75" />
+      <line x1="2.25" y1="12" x2="4.5" y2="12" />
+      <line x1="19.5" y1="12" x2="21.75" y2="12" />
+      {/* Diagonal Reel Spokes */}
+      <line x1="14.3" y1="14.3" x2="18.9" y2="18.9" />
+      <line x1="9.7" y1="14.3" x2="5.1" y2="18.9" />
+      <line x1="9.7" y1="9.7" x2="5.1" y2="5.1" />
+      <line x1="14.3" y1="9.7" x2="18.9" y2="5.1" />
+      {/* 4 Precision Film Reel Cutouts */}
+      <circle cx="12" cy="6.8" r="1.3" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="17.2" r="1.3" fill="currentColor" stroke="none" />
+      <circle cx="6.8" cy="12" r="1.3" fill="currentColor" stroke="none" />
+      <circle cx="17.2" cy="12" r="1.3" fill="currentColor" stroke="none" />
+      {/* Center Reel Hub */}
+      <circle cx="12" cy="12" r="3.25" />
+      {/* Timeline Playhead Core */}
+      <polygon points="11,10.2 14.2,12 11,13.8" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}

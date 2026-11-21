@@ -5,7 +5,6 @@ import {
   TicketIcon,
   AlertCircleIcon,
   CheckCircleIcon,
-  SparklesIcon,
 } from "./Icons";
 
 export const BookingView: React.FC = () => {
@@ -78,7 +77,7 @@ export const BookingView: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Hero Card with Cinematic Backdrop */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-zinc-900 via-zinc-900/90 to-zinc-950 border border-zinc-800 p-6 sm:p-8 rounded-2xl shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="relative overflow-hidden bg-gradient-to-r from-zinc-900 via-zinc-900/90 to-zinc-950 border border-zinc-800 p-4 sm:p-8 rounded-2xl shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-5 sm:gap-6">
         {/* Cinematic Backdrop Image */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <img
@@ -92,31 +91,28 @@ export const BookingView: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/95 via-zinc-950/85 to-zinc-950/90" />
         </div>
 
-        <div className="relative z-10 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-red-600/15 border border-red-600/30 flex items-center justify-center text-red-400 shadow-[0_0_20px_rgba(237,29,36,0.3)] flex-shrink-0">
-            <TicketIcon className="w-6 h-6" />
+        <div className="relative z-10 flex items-start sm:items-center gap-3.5 sm:gap-4">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-red-600/15 border border-red-600/30 flex items-center justify-center text-red-400 shadow-[0_0_20px_rgba(237,29,36,0.3)] flex-shrink-0">
+            <TicketIcon className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
-          <div>
-            <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-              <span className="bg-[#ED1D24] text-white px-2 py-0.5 rounded-xs font-black text-[9px] tracking-widest uppercase shadow-[0_0_12px_rgba(237,29,36,0.5)]">
-                MARVEL PREMIERE
-              </span>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">
+          <div className="min-w-0">
+            <div className="flex items-center gap-2 mb-1 flex-wrap">
+              <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">
                 Opening Night Ticket Optimization
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-black text-zinc-100 tracking-tight">
+            <h2 className="text-lg sm:text-2xl font-black text-zinc-100 tracking-tight">
               Opening Night Watch Party Booking
             </h2>
-            <p className="text-xs text-zinc-400 mt-1 max-w-xl">
+            <p className="text-[11px] sm:text-xs text-zinc-400 mt-1 max-w-xl">
               Exact-sum ticket bundle optimization with bottom-up dynamic programming. Find the fewest bundles for your crew.
             </p>
           </div>
         </div>
 
-        <div className="relative z-10 flex items-center gap-2 text-xs text-zinc-300 bg-zinc-950/80 backdrop-blur-sm px-4 py-2 rounded-xl border border-zinc-800 shadow-md">
+        <div className="relative z-10 self-start md:self-auto flex items-center gap-2 text-xs text-zinc-300 bg-zinc-950/80 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl border border-zinc-800 shadow-md">
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
-          <span className="font-medium">Optimal Minimum Bundles</span>
+          <span className="font-medium text-xs">Optimal Minimum Bundles</span>
         </div>
       </div>
 
@@ -177,7 +173,7 @@ export const BookingView: React.FC = () => {
               <label className="block text-xs font-semibold text-zinc-300 mb-2 uppercase tracking-wider">
                 Party Group Size (1 - 10,000 Seats)
               </label>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-2">
                 <input
                   type="number"
                   min={1}
@@ -188,20 +184,20 @@ export const BookingView: React.FC = () => {
                     setBookingResult(null);
                   }}
                   placeholder="e.g. 6"
-                  className="flex-1 bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-100 font-mono font-bold focus:outline-none focus:border-emerald-500 transition-colors"
+                  className="w-full sm:flex-1 bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-100 font-mono font-bold focus:outline-none focus:border-emerald-500 transition-colors"
                   required
                 />
                 <button
                   type="submit"
                   disabled={quoting || !selectedCinemaId}
-                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-black text-sm tracking-wide transition-all shadow-[0_0_20px_rgba(237,29,36,0.4)] hover:shadow-[0_0_25px_rgba(237,29,36,0.6)] disabled:opacity-50 cursor-pointer whitespace-nowrap"
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-black text-sm tracking-wide transition-all shadow-[0_0_20px_rgba(237,29,36,0.4)] hover:shadow-[0_0_25px_rgba(237,29,36,0.6)] disabled:opacity-50 cursor-pointer whitespace-nowrap text-center"
                 >
                   {quoting ? "Calculating..." : "Get Bundle Quote"}
                 </button>
               </div>
 
               {/* Quick sample buttons */}
-              <div className="mt-2 flex items-center gap-1.5 flex-wrap">
+              <div className="mt-2.5 flex items-center gap-1.5 flex-wrap">
                 <span className="text-[11px] text-zinc-500">Presets:</span>
                 {[6, 11, 44, 100].map((num) => (
                   <button
@@ -313,7 +309,7 @@ export const BookingView: React.FC = () => {
                 </div>
 
                 {/* Mathematical Check Footnote */}
-                <div className="mt-4 pt-3 border-t border-zinc-800/40 flex items-center justify-between text-xs text-zinc-500 font-mono">
+                <div className="mt-4 pt-3 border-t border-zinc-800/40 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-zinc-500 font-mono">
                   <span>
                     Formula:{" "}
                     {bookingResult.bundles
@@ -322,7 +318,7 @@ export const BookingView: React.FC = () => {
                     = {bookingResult.groupSize} seats
                   </span>
                   <span className="text-emerald-500 flex items-center gap-1 font-sans">
-                    <SparklesIcon className="w-3.5 h-3.5" />
+                    <CheckCircleIcon className="w-3.5 h-3.5" />
                     Exact match guaranteed
                   </span>
                 </div>

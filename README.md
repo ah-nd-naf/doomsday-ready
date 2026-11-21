@@ -293,6 +293,7 @@ erDiagram
 - **Prisma Version**: Prisma `6.19.3` is used because Prisma 7 introduced configuration and peer dependency issues during setup.
 - **Prisma Client Generation**: `backend/package.json` has a `postinstall` script (`prisma generate`) so a fresh clone works after `npm install`.
 - **CORS & Proxy**: Frontend uses a Vite dev proxy (`/api` $\to$ `http://localhost:3000`) instead of enabling the CORS package on the Express backend.
+- **Deployment**: frontend on Vercel, backend on Render (free plan), database on Neon. The frontend calls /api through a Vercel rewrite (frontend/vercel.json) to the Render backend, so no CORS configuration is needed in the Express app.
 
 ---
 
@@ -334,4 +335,5 @@ I read and tested the generated code and can explain it. The agent was instructe
 
 ## Live Demo
 
-Not deployed. Runs locally, see "Getting Started" above.
+Live demo: https://frontend-weld-kappa-51eesyomtl.vercel.app
+(The backend runs on Render's free plan, so the first request after inactivity can take up to a minute while the server wakes up.)

@@ -60,5 +60,5 @@ I read and tested the generated code and can explain it. The agent was instructe
 - **2026-11-21 — Step 11: Read-Only Audit & Documentation**
   Conducted read-only audit of project status, verified all 74 backend tests pass and production builds succeed, authored final `README.md` and updated `AI_USAGE.md`.
 
-- **2026-11-21 — Step 12: Fresh Clone Verification**
-  Fresh clone test found a missing Prisma client generation step; added a postinstall script and a README step.
+- 2026-11-21 — Fresh clone test found a missing Prisma client generation step; added a postinstall script and a README step.
+- 2026-11-21 — Deployed the backend on Render and the frontend on Vercel (Vercel rewrite to the Render API); added the live demo link to the README.
