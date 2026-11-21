@@ -55,7 +55,10 @@ I read and tested the generated code and can explain it. The agent was instructe
   Created `/frontend` using React 19, TypeScript, Vite 8, and Tailwind CSS 4. Configured Vite dev proxy to forward `/api` to `http://localhost:3000`. Built tabbed views for Movies, Rewatch Plan, and Cinema Booking with modal dialogues.
 
 - **2026-11-21 — Step 10: Visual Polish & Media Assets**
-  Added local official theatrical posters in `/frontend/public/posters/`, built `MoviePoster.tsx` component with fallback styling, and implemented responsive horizontal media cards with Marvel Studios aesthetic.
+  Added local official theatrical posters in `/frontend/public/posters/`, built `MoviePoster.tsx` component with fallback styling, and implemented responsive horizontal media cards.
 
 - **2026-11-21 — Step 11: Read-Only Audit & Documentation**
   Conducted read-only audit of project status, verified all 74 backend tests pass and production builds succeed, authored final `README.md` and updated `AI_USAGE.md`.
+
+- **2026-11-21 — Step 12: Fresh Clone Verification**
+  Fresh clone test found a missing Prisma client generation step; added a postinstall script and a README step.

@@ -102,7 +102,13 @@ doomsday-ready/
    npm install
    ```
 
-3. **Configure environment variables**:
+3. **Generate the Prisma client**:
+   ```bash
+   npx prisma generate
+   ```
+   (This also runs automatically after `npm install` through the `postinstall` script, but running it manually is harmless.)
+
+4. **Configure environment variables**:
    Copy `.env.example` to `.env`:
    ```bash
    cp .env.example .env
@@ -115,20 +121,20 @@ doomsday-ready/
    PORT=3000
    ```
 
-4. **Run migrations**:
+5. **Run migrations**:
    Apply the existing Prisma migration to create the database schema:
    ```bash
    npx prisma migrate deploy
    ```
    *(Note: `npx prisma migrate dev` also works on a development database).*
 
-5. **Seed the database**:
+6. **Seed the database**:
    Populate the database with the assessment's initial MCU movies and cinemas:
    ```bash
    npx prisma db seed
    ```
 
-6. **Start the backend development server**:
+7. **Start the backend development server**:
    ```bash
    npm run dev
    ```
@@ -285,6 +291,7 @@ erDiagram
 - **Concurrency & Cycle Check**: In `PATCH /movies/:id`, the cycle check and the subsequent database update are separate steps rather than a serialized table lock. Two simultaneous requests could theoretically form a cycle; this is an accepted tradeoff at this scale.
 - **Approximate Seed Data**: Seed runtimes and release years are approximate sample data, not an official watch guide.
 - **Prisma Version**: Prisma `6.19.3` is used because Prisma 7 introduced configuration and peer dependency issues during setup.
+- **Prisma Client Generation**: `backend/package.json` has a `postinstall` script (`prisma generate`) so a fresh clone works after `npm install`.
 - **CORS & Proxy**: Frontend uses a Vite dev proxy (`/api` $\to$ `http://localhost:3000`) instead of enabling the CORS package on the Express backend.
 
 ---
@@ -327,4 +334,4 @@ I read and tested the generated code and can explain it. The agent was instructe
 
 ## Live Demo
 
-Live demo: (to be added)
+Not deployed. Runs locally, see "Getting Started" above.
